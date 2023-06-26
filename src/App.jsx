@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import Header from './Header.jsx';
 import ActivityList from './components/ActivityList.jsx';
+import Spinner from './components/Spinner.jsx';
 
 //Format date
 function FormatDate(data){
@@ -41,6 +42,7 @@ const App = () => {
 
   const [activities, setData] = useState([])
   const [archiveFlag, setStatus] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   // Base Url from which the activities will be fetched
   const BASE_URL = 'https://cerulean-marlin-wig.cyclic.app/activities'
@@ -48,66 +50,76 @@ const App = () => {
   // This will run one time after the component mounts
   useEffect(() => {
     //Fetch Data
-    axios.get(BASE_URL)
-      .then(function (response) {
-        // handle success
-        const activityData = response.data
-          
-        //Filter incomplete activity data by removing activities with zero duration
-        const arrayJson = activityData.filter(activity=>activity.duration > 0)
-        //Sort data by date in decending order
-        let sortedData = arrayJson.sort((a, b) => { 
-          let a1 = a.created_at.match(/\d{4}-\d{2}-\d{2}/g).toString() + " "+ a.created_at.match(/\d{2}:\d{2}:\d{2}/g).toString();
-          let b1 = b.created_at.match(/\d{4}-\d{2}-\d{2}/g).toString() + " "+ b.created_at.match(/\d{2}:\d{2}:\d{2}/g).toString();
-          
-          return(new Date(b1).getTime() - new Date(a1).getTime())
+    if(!archiveFlag & activities.length == 0) {
       
-        })
-        console.log("Data Fetched from the server: "+ JSON.stringify(sortedData))
+      axios.get(BASE_URL)
+        .then(function (response) {
+          // handle success
+          const activityData = response.data
+            
+          //Filter incomplete activity data by removing activities with zero duration
+          const arrayJson = activityData.filter(activity=>activity.duration > 0)
+          //Sort data by date in decending order
+          let sortedData = arrayJson.sort((a, b) => { 
+            let a1 = a.created_at.match(/\d{4}-\d{2}-\d{2}/g).toString() + " "+ a.created_at.match(/\d{2}:\d{2}:\d{2}/g).toString();
+            let b1 = b.created_at.match(/\d{4}-\d{2}-\d{2}/g).toString() + " "+ b.created_at.match(/\d{2}:\d{2}:\d{2}/g).toString();
+            
+            return(new Date(b1).getTime() - new Date(a1).getTime())
         
-        if(!archiveFlag)
-          setData(GroupByDate(sortedData))
-        else setData([])
-        
-    }).catch(function (error) {
-        console.log(error);
-    }).finally(function () {
+          })
+
+          //Storing cleaned data to activities list grouped by dates
+          if(!archiveFlag) {
+            setData(GroupByDate(sortedData))
+            setLoading(true)
+          }
+          else setData([])
           
-    });
+      }).catch(function (error) {
+          console.log(error);
+      }).finally(function () {
+            
+      });
     
-    }, [archiveFlag]);
+    }
+    }, [archiveFlag, loading, activities]);
   
   
   return (
     <div className='container'>
       <Header/>
+      
       <div className='archive-button-div'>
         <div>
           <img className='archive-image' src="../public/images/archive.png" />
         </div>      
-        <button className='archive-button' onClick={() => {
-          console.log("B1 - Archive status:"+archiveFlag)
-          if(!archiveFlag)
-            setData([])
-          else setData(activities)
-          setStatus(archiveFlag?false:true)  
+        <button className='archive-button' onClick={ () => {
           
-          } }>{
-            archiveFlag?"Unarchive all calls":"Archive all calls"
-        }
-          
-      </button>
-    </div>
+            if(!archiveFlag)
+              setData([])
+            else
+              setData(activities)
+            setStatus(archiveFlag?false:true)  
+            
+            } }> 
+            {
+              archiveFlag?"Unarchive all calls":"Archive all calls"
+            }
+        </button>
+      </div>
+      
       <div className="container-view">
-        {activities.map((activity, index) => ( 
+        {loading? activities.map((activity, index) => ( 
             <div  className="activity-list" key={index}>
               <div className='date-group'>
                 <label>{FormatDate(activity.date)}</label>
                 <ActivityList className="activity-item" callList={activity.activity_details} />
               </div>
             </div>  
-          ))}
+          )):<Spinner/>}
       </div>
+      
+    
     </div>
   );
 };
