@@ -85,3 +85,8 @@
   font-family: "Lucida Console", "Courier New", monospace;
 }
 
+#app .activity-table-data {
+  border-collapse: collapse;
+  width: 100%;
+}
+
