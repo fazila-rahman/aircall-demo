@@ -23,3 +23,32 @@
   padding: 20px;
 }
 
+#app .archive-button-div {
+  display: flex;
+  flex-direction : row;
+  border-style: groove;
+  border: 1px solid #f2f2f2;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 10px;
+  padding: 15px 15px 15px 15px;
+  height: 30px;
+}
+
+#app .archive-image {
+  margin-top: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+#app .archive-button {
+  display: flex;
+  flex-direction : row;
+  border: none;
+  cursor: pointer;
+  padding: 15px;
+  font: size 1em;
+  font-weight: bold;
+  background: none;
+}

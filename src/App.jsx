@@ -4,6 +4,18 @@ import axios from 'axios';
 
 import Header from './Header.jsx';
 
+//Format date
+function FormatDate(data){
+  const createdStamp = new Date(data +"T00:00:00")
+  const date = createdStamp.toLocaleDateString('en-US',{
+      day:   'numeric',
+      month: 'short',
+      year:  'numeric',
+
+  });
+  return date
+}
+
 //Group activities by date
 function GroupByDate(data) {
   
@@ -27,7 +39,8 @@ function GroupByDate(data) {
 const App = () => {
 
   const [activities, setData] = useState([])
-  
+  const [archiveFlag, setStatus] = useState(false)
+
   // Base Url from which the activities will be fetched
   const BASE_URL = 'https://cerulean-marlin-wig.cyclic.app/activities'
 
@@ -50,9 +63,10 @@ const App = () => {
       
         })
         console.log("Data Fetched from the server: "+ JSON.stringify(sortedData))
-        //Group data by date
-        setData(GroupByDate(sortedData))
         
+        if(!archiveFlag)
+          setData(GroupByDate(sortedData))
+        else setData([])
         
     }).catch(function (error) {
         console.log(error);
@@ -60,12 +74,29 @@ const App = () => {
           
     });
     
-    }, []);
+    }, [archiveFlag]);
   
   
   return (
     <div className='container'>
       <Header/>
+      <div className='archive-button-div'>
+        <div>
+          <img className='archive-image' src="../public/images/archive.png" />
+        </div>      
+        <button className='archive-button' onClick={() => {
+          console.log("B1 - Archive status:"+archiveFlag)
+          if(!archiveFlag)
+            setData([])
+          else setData(activities)
+          setStatus(archiveFlag?false:true)  
+          
+          } }>{
+            archiveFlag?"Unarchive all calls":"Archive all calls"
+        }
+          
+      </button>
+    </div>
       <div className="container-view">Some activities should be here</div>
     </div>
   );
