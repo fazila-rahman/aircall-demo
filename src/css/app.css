@@ -21,6 +21,8 @@
 
 #app .container-view {
   padding: 20px;
+  overflow: auto;
+  max-height: 70%;
 }
 
 #app .archive-button-div {
@@ -52,3 +54,34 @@
   font-weight: bold;
   background: none;
 }
+
+#app .activity-list {
+  display: block;
+  flex-direction : row;
+  border: 1px solid #f2f2f2;
+  border-style: groove none none none;
+  cursor: pointer;
+  padding: 15px 15px 15px 15px;
+  height: auto;
+  width: 100%;
+  border-top-style: groove;
+  margin-left: -19px;
+  margin-right: 5px;  
+}
+
+#app .date-group{
+  position: inherit;
+  border:1px solid #d9d9d9;
+  border-style: dotted dotted dotted dotted;
+  border-radius: 10px;
+}
+
+#app .date-group>label{
+  position:relative;
+  top:-24px;
+  left:110px;
+  background-color:#ffffff;
+  text-transform: uppercase;
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+

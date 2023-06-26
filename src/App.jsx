@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 import Header from './Header.jsx';
+import ActivityList from './components/ActivityList.jsx';
 
 //Format date
 function FormatDate(data){
@@ -97,7 +98,16 @@ const App = () => {
           
       </button>
     </div>
-      <div className="container-view">Some activities should be here</div>
+      <div className="container-view">
+        {activities.map((activity, index) => ( 
+            <div  className="activity-list" key={index}>
+              <div className='date-group'>
+                <label>{FormatDate(activity.date)}</label>
+                <ActivityList className="activity-item" callList={activity.activity_details} />
+              </div>
+            </div>  
+          ))}
+      </div>
     </div>
   );
 };
