@@ -2,14 +2,68 @@ import React from 'react'
 
 function Activity(props) {   
     const { itemData } = props
-    console.log(JSON.stringify(itemData))
+    
+    // Retrieve timestamp 
+    const createdStamp = new Date(itemData.created_at)
+    
+    // Retrieve Time information
+    const time = createdStamp.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit', hour12: true})
+    var hours = createdStamp.getHours()
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours >= 12 ? (hours - 12) : hours
+    var minutes = (createdStamp.getMinutes()).toString()
+    if (minutes.length < 2) 
+        minutes = "0" + minutes;
+
+    // Determine call direction and source/destination of the call
+    var fromOrTo = 'Nothing'
+    var direction = 'ND'
+    if (itemData.hasOwnProperty('direction')){
+        fromOrTo = itemData.direction == 'inbound'? itemData.from : itemData.to
+        direction = itemData.direction == 'inbound'? 'IN' : 'OUT'
+        
+        if( (itemData.direction =='inbound') && (!itemData.hasOwnProperty('from')) ) 
+                fromOrTo = itemData.via
+        else if( (itemData.direction =='outbound') && (!itemData.hasOwnProperty('to')) ) 
+            fromOrTo = itemData.via     
+    }
+    else {
+        if (itemData.hasOwnProperty('to')){
+            direction = 'OUT'
+            fromOrTo = itemData.to
+        }
+        else if (itemData.hasOwnProperty('from')){
+                direction = 'IN'    
+                fromOrTo = itemData.from
+        }
+    }
+
+    //Determine call icon to be displayed
+    var imagePath = "../public/images/outgoing-call-32.png" 
+    if (direction == 'IN') {
+        if (itemData.call_type == 'missed') {
+            imagePath = "../public/images/missed-call-32.png" 
+        }
+        else if (itemData.call_type == 'answered') {
+            imagePath = "../public/images/incoming-call-32.png" 
+        }
+        else if (itemData.call_type == 'voicemail') {
+            imagePath = "../public/images/voice-32.png" 
+        }
+    }
+    else if (direction == 'OUT') {
+        if (itemData.call_type == 'missed') 
+            imagePath = "../public/images/outgoing-missed-call-32.png" 
+        else if (itemData.call_type == 'amswered') 
+            imagePath = "../public/images/outgoing-received-call-32.png" 
+    }
     
     // Return HTML
     return (
         <tr>
-            <td>Icon </td>  
-            <td>Number</td>
-            <td> Time </td>  
+            <td><img className='archive-image' src={imagePath} /></td>  
+            <td>{fromOrTo}</td>
+            <td className='activity-table-time-data'><span className='dotted-left'>.</span><span>{hours}:{minutes}</span><span className='ampm'>{ampm}</span></td>  
         </tr>
         
     )
