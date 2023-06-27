@@ -1,6 +1,8 @@
 import React , { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
+
+import './css/spinner.css';
+
 
 import Header from './Header.jsx';
 import ActivityList from './components/ActivityList.jsx';
@@ -124,6 +126,6 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+//ReactDOM.render(<App/>, document.getElementById('app'));
 
 export default App;

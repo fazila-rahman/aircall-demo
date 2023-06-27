@@ -1,17 +1,12 @@
-
-import './css/body.css';
-import './css/app.css';
-import './css/header.css';
-import './css/spinner.css';
-
 import App from './App.jsx';
-
-/*
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+
+import './css/body.css';
+import './css/header.css';
+import './css/app.css';
+
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -25,4 +20,3 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-*/

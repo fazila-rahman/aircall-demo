@@ -1,4 +1,4 @@
-#app .overlay {
+#root .overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -9,13 +9,13 @@
     justify-content: center;
     align-items: center;
   }
-  #app .lds-facebook {
+  #root .lds-facebook {
     display: inline-block;
     position: relative;
     width: 80px;
     height: 80px;
   }
-  #app .lds-facebook div {
+  #root .lds-facebook div {
     display: inline-block;
     position: absolute;
     left: 8px;
@@ -23,15 +23,15 @@
     background: #fff;
     animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
   }
-  #app .lds-facebook div:nth-child(1) {
+  #root .lds-facebook div:nth-child(1) {
     left: 8px;
     animation-delay: -0.24s;
   }
-  #app .lds-facebook div:nth-child(2) {
+  #root .lds-facebook div:nth-child(2) {
     left: 32px;
     animation-delay: -0.12s;
   }
-  #app .lds-facebook div:nth-child(3) {
+  #root .lds-facebook div:nth-child(3) {
     left: 56px;
     animation-delay: 0;
   }
