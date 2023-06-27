@@ -50,7 +50,7 @@ const App = () => {
   // This will run one time after the component mounts
   useEffect(() => {
     //Fetch Data
-    if(!archiveFlag & activities.length == 0) {
+    if(!archiveFlag & activities.length === 0) {
       
       axios.get(BASE_URL)
         .then(function (response) {
@@ -91,7 +91,7 @@ const App = () => {
       
       <div className='archive-button-div'>
         <div>
-          <img className='archive-image' src="../images/archive.png" />
+          <img className='archive-image' src="../images/archive.png" alt='archive icon'/>
         </div>      
         <button className='archive-button' onClick={ () => {
           
