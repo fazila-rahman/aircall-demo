@@ -39,23 +39,23 @@ function Activity(props) {
     }
 
     //Determine call icon to be displayed
-    var imagePath = "../public/images/outgoing-call-32.png" 
+    var imagePath = "../images/outgoing-call-32.png" 
     if (direction == 'IN') {
         if (itemData.call_type == 'missed') {
-            imagePath = "../public/images/missed-call-32.png" 
+            imagePath = "../images/missed-call-32.png" 
         }
         else if (itemData.call_type == 'answered') {
-            imagePath = "../public/images/incoming-call-32.png" 
+            imagePath = "../images/incoming-call-32.png" 
         }
         else if (itemData.call_type == 'voicemail') {
-            imagePath = "../public/images/voice-32.png" 
+            imagePath = "../images/voice-32.png" 
         }
     }
     else if (direction == 'OUT') {
         if (itemData.call_type == 'missed') 
-            imagePath = "../public/images/outgoing-missed-call-32.png" 
+            imagePath = "../images/outgoing-missed-call-32.png" 
         else if (itemData.call_type == 'amswered') 
-            imagePath = "../public/images/outgoing-received-call-32.png" 
+            imagePath = "../images/outgoing-received-call-32.png" 
     }
     
     // Return HTML

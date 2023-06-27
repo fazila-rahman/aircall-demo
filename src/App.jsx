@@ -91,7 +91,7 @@ const App = () => {
       
       <div className='archive-button-div'>
         <div>
-          <img className='archive-image' src="../public/images/archive.png" />
+          <img className='archive-image' src="../images/archive.png" />
         </div>      
         <button className='archive-button' onClick={ () => {
           
